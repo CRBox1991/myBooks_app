@@ -5,11 +5,10 @@ const postUser = async (request, response) =>
 {
     try
     {        
-    let sql = "INSERT INTO user (name, last_name, email, photo, password) VALUES ('" +     request.body.name + "', '" +
-                                                                                           request.body.last_name + "', '" +
-                                                                                           request.body.email + "', '" +
-                                                                                           request.body.photo + "', '" +
-                                                                                           request.body.password + "')"
+    let sql = "INSERT INTO user (name, last_name, email, password) VALUES ('" +     request.body.name + "', '" +
+                                                                                    request.body.last_name + "', '" +
+                                                                                    request.body.email + "', '" +
+                                                                                    request.body.password + "')"
     let [result] = await connection.query(sql)
 
     if(result.insertId){
@@ -42,12 +41,14 @@ const postUserLogin = async (request, response) =>
         } else 
         {
             console.log("Los datos no son correctos")
+            response.status(400).send('Los datos no son correctos')
         }
         
     }
     catch(error)
     {
         console.log(error);
+        response.status(400).send('Los datos no son correctos');
     }
 }
 
@@ -93,6 +94,7 @@ const putUsuario = async (request, response) =>
     }
     catch(error){
         console.log(error);
+        response.status(400).send('The user has not been found')
     }
 }
 
